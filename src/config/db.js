@@ -1,9 +1,18 @@
-const postgres = require('postgres');
+const { Pool } = require('pg');
 
-const connectionString = 'postgresql://postgres:fachri1164@db.lyqpmcszxykrnnsljkkf.supabase.co:5432/postgres';
-
-const sql = postgres(connectionString, {
-  ssl: { rejectUnauthorized: false }
+const pool = new Pool({
+  connectionString: 'postgresql://postgres:fachri1164@db.lyqpmcszxykrnnsljkkf.supabase.co:5432/postgres',
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
-module.exports = sql;
+pool.on('error', (err, client) => {
+  console.error('Unexpected error on idle client', err);
+  process.exit(-1);
+});
+
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+  pool,
+};
