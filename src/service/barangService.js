@@ -3,7 +3,7 @@ const db = require("../config/db");
 const barangService = {
   getBarang: async () => {
     try {
-      const barang = await sql`
+      const barang = await db`
         SELECT brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status
         FROM barang;
       `;
