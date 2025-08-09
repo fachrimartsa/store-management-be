@@ -3,21 +3,14 @@ const db = require("../config/db");
 const barangService = {
   getBarang: async () => {
     try {
-      const result = await db.query(
-        `SELECT
-            brg_id,
-            brg_nama,
-            brg_kategori,
-            brg_harga_beli,
-            brg_harga_jual,
-            brg_stok,
-            brg_status
-        FROM barang`
-      );
-      return result.rows;
-    } catch (err) {
-      console.error("Error mengambil barang:", err);
-      throw new Error("Gagal mengambil daftar barang dari database.");
+      const barang = await sql`
+        SELECT brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status
+        FROM barang;
+      `;
+      return barang;
+    } catch (error) {
+      console.error('Error fetching barang:', error);
+      throw new Error('Failed to fetch barang');
     }
   },
   getBarangById: async ({ brg_id }) => {
