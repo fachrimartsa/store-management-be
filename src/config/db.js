@@ -1,6 +1,6 @@
 import postgres from 'postgres';
 
-const connectionString = 'postgresql://postgres:password@host:port/database';
+const connectionString = 'postgresql://postgres:fachri1164@host:port/database';
 
 const sql = postgres(connectionString, {
   ssl: { rejectUnauthorized: false }
