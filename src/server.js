@@ -19,6 +19,11 @@ app.use(cors({
   credentials: true
 }));
 
+app.get('/', (req, res) => {
+  res.send('Backend is running!');
+});
+
+
 app.use('/graphql', graphqlHTTP({
   schema: schemas,
   rootValue: resolvers,
