@@ -16,7 +16,7 @@ const pembelianService = {
         FROM pembelian p
         JOIN barang b ON p.pbl_barang = b.brg_id
         JOIN supplier s ON p.pbl_supplier = s.sp_id
-        ORDER BY p.pbl_tanggal ASC
+        ORDER BY p.pbl_tanggal DESC
       `;
 
       const formattedData = result.map(row => {
