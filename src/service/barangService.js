@@ -54,7 +54,7 @@ const barangService = {
       throw new Error("Gagal membuat barang baru di database.");
     }
   },
-  
+
   updateBarang: async ({ brg_id, ...updates }) => {
     try {
       const updateKeys = Object.keys(updates);
@@ -72,8 +72,10 @@ const barangService = {
         RETURNING brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status
       `;
 
-      const result = await db.query(query, [...values, brg_id]);
-      return result.rows[0] || null;
+      const result = await db.unsafe(query, [...values, brg_id]);
+
+      return result[0] || null;
+
     } catch (err) {
       console.error(`Error mengedit barang dengan ID ${brg_id}:`, err);
       throw new Error(`Gagal mengedit barang dengan ID ${brg_id}.`);

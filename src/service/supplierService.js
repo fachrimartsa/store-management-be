@@ -64,23 +64,25 @@ const supplierService = {
     }
   },
 
-  updateSupplier: async ({ sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat }) => {
+  updateSupplier: async ({ sp_id, ...updates }) => {
     try {
-      const updates = [];
-      if (sp_nama !== undefined) updates.push(`sp_nama = ${sp_nama}`);
-      if (sp_contact !== undefined) updates.push(`sp_contact = ${sp_contact}`);
-      if (sp_kategori !== undefined) updates.push(`sp_kategori = ${sp_kategori}`);
-      if (sp_alamat !== undefined) updates.push(`sp_alamat = ${sp_alamat}`);
+      const updateKeys = Object.keys(updates);
+      if (updateKeys.length === 0) {
+        throw new Error("Tidak ada data yang diberikan untuk update.");
+      }
 
-      if (updates.length === 0) throw new Error("Tidak ada data yang diberikan untuk update.");
+      const updatesString = updateKeys.map((key, index) => `${key} = $${index + 1}`).join(", ");
+      const values = Object.values(updates);
 
       const query = `
-        UPDATE supplier SET ${updates.join(', ')}
-        WHERE sp_id = ${sp_id}
+        UPDATE supplier
+        SET ${updatesString}
+        WHERE sp_id = $${values.length + 1}
         RETURNING sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat
       `;
 
-      const result = await db.unsafe(query);
+      const result = await db.unsafe(query, [...values, sp_id]);
+
       return result[0] || null;
     } catch (err) {
       console.error(`Error mengedit supplier dengan ID ${sp_id}:`, err);
