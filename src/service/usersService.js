@@ -17,10 +17,10 @@ const usersService = {
 
   loginUser: async ({ usr_username, usr_password }) => {
     try {
-        await db`
+        const result = await db`
         SELECT TRUE FROM users WHERE usr_username = ${usr_username} AND usr_password = ${usr_password}
       `;
-      return true;
+        return result.length > 0;
     } catch (err) {
       console.error("Error login:", err);
       throw new Error("Gagal login di database.");
