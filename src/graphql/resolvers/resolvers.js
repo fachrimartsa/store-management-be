@@ -3,6 +3,7 @@ const supplierResolver = require('./supplierResolver');
 const pembelianResolver = require('./pembelianResolver');
 const pengeluaranResolver = require('./pengeluaranResolver');
 const penjualanResolver = require('./penjualanResolver');
+const usersResolver = require('./usersResolver');
 
 const combinedResolvers = {
   // query
@@ -11,6 +12,7 @@ const combinedResolvers = {
   ...pembelianResolver,
   ...pengeluaranResolver,
   ...penjualanResolver,
+  ...usersResolver,
 
   // mutation
   ...barangResolver,
@@ -18,6 +20,7 @@ const combinedResolvers = {
   ...pembelianResolver,
   ...pengeluaranResolver,
   ...penjualanResolver,
+  ...usersResolver,
 };
 
 module.exports = combinedResolvers;

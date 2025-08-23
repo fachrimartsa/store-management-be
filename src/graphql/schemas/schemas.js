@@ -5,7 +5,7 @@ const supplierTypeDefs = require('./schemaSupplier');
 const penjualanTypeDefs = require('./schemaPenjualan');
 const pembelianTypeDefs = require('./schemaPembelian');
 const pengeluaranTypeDefs = require('./schemaPengeluaran');
-
+const usersTypeDefs = require('./schemasUsers');
 
 const baseSchema = `
   type Query {
@@ -23,6 +23,7 @@ const combinedSchemaSDL = `
   ${pembelianTypeDefs}
   ${pengeluaranTypeDefs}
   ${penjualanTypeDefs}
+  ${usersTypeDefs}
 `;
 
 try {
