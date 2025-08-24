@@ -3,7 +3,6 @@ const schemaUsers = `
         usr_id: ID!
         usr_toko: String!
         usr_username: String!
-        usr_password: String!
     }
 
     extend type Query {
