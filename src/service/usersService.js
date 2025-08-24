@@ -18,7 +18,7 @@ const usersService = {
   loginUser: async ({ usr_username, usr_password }) => {
     try {
         const result = await db`
-        SELECT * FROM users WHERE usr_username = ${usr_username} AND usr_password = ${usr_password}
+        SELECT usr_id, usr_toko, usr_username FROM users WHERE usr_username = ${usr_username} AND usr_password = ${usr_password}
       `;
         return result[0] || null;
     } catch (err) {
