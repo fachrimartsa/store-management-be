@@ -5,15 +5,15 @@ const schemaUsers = `
         usr_username: String!
     }
 
-    type Query {
+    extend type Query {
         getUserById(usr_id: ID!): Users
     }
 
-    type Mutation {
+    extend type Mutation {
         loginUser(
             usr_username: String!
             usr_password: String!
-        ): Users
+        ): Users!
     }
 `;
 
