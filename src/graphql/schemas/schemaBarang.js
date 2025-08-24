@@ -4,9 +4,9 @@ const schemaBarang = `
         brg_nama: String!
         brg_kategori: String!
         brg_harga_beli: Float!
-        brg_harga_jual: Float!
         brg_stok: Int!
         brg_status: String!
+        brg_idUser: Int!
     }
 
     extend type Query {
@@ -20,18 +20,18 @@ const schemaBarang = `
         brg_nama: String!
         brg_kategori: String!
         brg_harga_beli: Float!
-        brg_harga_jual: Float!
         brg_stok: Int!
         brg_status: String!
+        brg_idUser: Int!
     ): Barang!
     updateBarang(
         brg_id: ID!
         brg_nama: String
         brg_kategori: String
         brg_harga_beli: Float
-        brg_harga_jual: Float
         brg_stok: Int
         brg_status: String
+        brg_idUser: Int
     ): Barang!
     deleteBarang(brg_id: ID!): Boolean
     }

@@ -1,14 +1,13 @@
 const db = require("../config/db");
 
 const barangService = {
-  getBarang: async () => {
+  getBarang: async ({ brg_idUser }) => {
     try {
-      // pakai tagged template literal, langsung dapat array
       const barang = await db`
-        SELECT brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status
-        FROM barang;
+        SELECT brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status
+        FROM barang WHERE brg_idUser = ${brg_idUser};
       `;
-      return barang; // sudah array
+      return barang; 
     } catch (error) {
       console.error('Error fetching barang:', error);
       throw new Error('Failed to fetch barang');
@@ -18,11 +17,11 @@ const barangService = {
   getBarangById: async ({ brg_id }) => {
     try {
       const result = await db`
-        SELECT brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status
+        SELECT brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status
         FROM barang
         WHERE brg_id = ${brg_id}
       `;
-      return result[0] || null; // langsung array, ambil index 0
+      return result[0] || null; 
     } catch (err) {
       console.error(`Error mengambil barang dengan ID ${brg_id}:`, err);
       throw new Error(`Gagal mengambil barang dengan ID ${brg_id}.`);
@@ -41,12 +40,12 @@ const barangService = {
     }
   },
 
-  createBarang: async ({ brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status }) => {
+  createBarang: async ({ brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser }) => {
     try {
       const result = await db`
-        INSERT INTO barang (brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status)
-        VALUES (${brg_nama}, ${brg_kategori}, ${brg_harga_beli}, ${brg_harga_jual}, ${brg_stok}, ${brg_status})
-        RETURNING brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status
+        INSERT INTO barang (brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser)
+        VALUES (${brg_nama}, ${brg_kategori}, ${brg_harga_beli}, ${brg_stok}, ${brg_status}, ${brg_idUser})
+        RETURNING brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser
       `;
       return result[0];
     } catch (err) {
@@ -69,7 +68,7 @@ const barangService = {
         UPDATE barang
         SET ${updatesString}
         WHERE brg_id = $${values.length + 1}
-        RETURNING brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status
+        RETURNING brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser
       `;
 
       const result = await db.unsafe(query, [...values, brg_id]);

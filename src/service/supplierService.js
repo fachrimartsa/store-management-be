@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
 const supplierService = {
-  getAllSuppliers: async () => {
+  getAllSuppliers: async ({ sp_idUser }) => {
     try {
       const result = await db`
         SELECT
@@ -10,9 +10,9 @@ const supplierService = {
           sp_contact,
           sp_kategori,
           sp_alamat
-        FROM supplier
+        FROM supplier WHERE sp_idUser = ${sp_idUser}
       `;
-      return result; // langsung array hasil query
+      return result; 
     } catch (err) {
       console.error("Error mengambil daftar supplier:", err);
       throw new Error("Gagal mengambil daftar supplier dari database.");
@@ -50,12 +50,12 @@ const supplierService = {
     }
   },
 
-  createSupplier: async ({ sp_nama, sp_contact, sp_kategori, sp_alamat }) => {
+  createSupplier: async ({ sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser }) => {
     try {
       const result = await db`
-        INSERT INTO supplier (sp_nama, sp_contact, sp_kategori, sp_alamat)
-        VALUES (${sp_nama}, ${sp_contact}, ${sp_kategori}, ${sp_alamat})
-        RETURNING sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat
+        INSERT INTO supplier (sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser)
+        VALUES (${sp_nama}, ${sp_contact}, ${sp_kategori}, ${sp_alamat}, ${sp_idUser})
+        RETURNING sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser
       `;
       return result[0];
     } catch (err) {
@@ -78,7 +78,7 @@ const supplierService = {
         UPDATE supplier
         SET ${updatesString}
         WHERE sp_id = $${values.length + 1}
-        RETURNING sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat
+        RETURNING sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser
       `;
 
       const result = await db.unsafe(query, [...values, sp_id]);

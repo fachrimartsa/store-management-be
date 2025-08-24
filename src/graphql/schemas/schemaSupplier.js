@@ -5,6 +5,7 @@ const schemaSupplier = `
     sp_contact: String!
     sp_kategori: String!
     sp_alamat: String!
+    sp_idUser: Int!
     }
 
     extend type Query {
@@ -19,6 +20,7 @@ const schemaSupplier = `
         sp_contact: String!
         sp_kategori: String!
         sp_alamat: String!
+        sp_idUser: Int!
     ): Supplier!
     updateSupplier(
         sp_id: ID!
@@ -26,6 +28,7 @@ const schemaSupplier = `
         sp_contact: String
         sp_kategori: String
         sp_alamat: String
+        sp_idUser: Int
     ): Supplier!
     deleteSupplier(sp_id: ID!): Boolean!
     }

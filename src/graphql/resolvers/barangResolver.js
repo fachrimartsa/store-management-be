@@ -1,9 +1,9 @@
 const barangService = require("../../service/barangService");
 
 const barangResolver = {
-  getAllBarang: async () => {
+  getAllBarang: async ({ brg_idUser }) => {
     try {
-      return await barangService.getBarang();
+      return await barangService.getBarang({ brg_idUser });
     } catch (error) {
       console.error("Error in getAllBarang resolver:", error);
       throw new Error("Failed to fetch barang.");
@@ -25,17 +25,17 @@ const barangResolver = {
       throw new Error("Failed to fetch stok.");
     }
   },
-  createBarang: async ({ brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status }) => {
+  createBarang: async ({ brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser }) => {
     try {
-      return await barangService.createBarang({ brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status });
+      return await barangService.createBarang({ brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser });
     } catch (error) {
       console.error("Error in createBarang resolver:", error);
       throw new Error("Failed to create barang.");
     }
   },
-  updateBarang: async ({ brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status }) => {
+  updateBarang: async ({ brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser }) => {
     try {
-      return await barangService.updateBarang({ brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_harga_jual, brg_stok, brg_status });
+      return await barangService.updateBarang({ brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser });
     } catch (error) {
       console.error(`Error in updateBarang resolver for ID ${brg_id}:`, error);
       throw new Error(`Failed to update barang with ID ${brg_id}.`);

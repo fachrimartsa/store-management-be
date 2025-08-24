@@ -1,9 +1,9 @@
 const supplierService = require("../../service/supplierService");
 
 const supplierResolver = {
-  getAllSuppliers: async () => {
+  getAllSuppliers: async ({ sp_idUser }) => {
     try {
-      return await supplierService.getAllSuppliers();
+      return await supplierService.getAllSuppliers({ sp_idUser });
     } catch (error) {
       console.error("Error in getAllSuppliers resolver:", error);
       throw new Error("Failed to fetch suppliers.");
@@ -27,17 +27,17 @@ const supplierResolver = {
     }
   },
 
-  createSupplier: async ({ sp_nama, sp_contact, sp_kategori, sp_alamat }) => {
+  createSupplier: async ({ sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser }) => {
     try {
-      return await supplierService.createSupplier({ sp_nama, sp_contact, sp_kategori, sp_alamat });
+      return await supplierService.createSupplier({ sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser });
     } catch (error) {
       console.error("Error in createSupplier resolver:", error);
       throw new Error("Failed to create supplier.");
     }
   },
-  updateSupplier: async ({ sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat }) => {
+  updateSupplier: async ({ sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser }) => {
     try {
-      return await supplierService.updateSupplier({ sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat });
+      return await supplierService.updateSupplier({ sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser });
     } catch (error) {
       console.error(`Error in updateSupplier resolver for ID ${sp_id}:`, error);
       throw new Error(`Failed to update supplier with ID ${sp_id}.`);
