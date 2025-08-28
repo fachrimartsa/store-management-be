@@ -5,7 +5,7 @@ const barangService = {
     try {
       const barang = await db`
         SELECT brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status
-        FROM barang WHERE brg_idUser = ${brg_idUser};
+        FROM barang WHERE "brg_idUser" = ${brg_idUser};
       `;
       return barang; 
     } catch (error) {
