@@ -71,7 +71,7 @@ const supplierService = {
         throw new Error("Tidak ada data yang diberikan untuk update.");
       }
 
-      const updatesString = updateKeys.map((key, index) => `${key} = $${index + 1}`).join(", ");
+      const updatesString = updateKeys.map((key, index) => `"${key}" = $${index + 1}`).join(", ");
       const values = Object.values(updates);
 
       const query = `
