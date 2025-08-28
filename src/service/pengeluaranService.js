@@ -9,10 +9,9 @@ const pengeluaranService = {
           pgl_tanggal,
           pgl_barang,
           pgl_jumlah,
-          pgl_total,
-          pgl_idUser
+          pgl_total
         FROM pengeluaran
-        WHERE pgl_idUser = ${pgl_idUser}
+        WHERE "pgl_idUser" = ${pgl_idUser}
         ORDER BY pgl_tanggal ASC
       `;
 
@@ -90,9 +89,9 @@ const pengeluaranService = {
   createPengeluaran: async ({ pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total, pgl_idUser }) => {
     try {
       const result = await db`
-        INSERT INTO pengeluaran (pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total, pgl_idUser)
+        INSERT INTO pengeluaran (pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total, "pgl_idUser")
         VALUES (${pgl_tanggal}, ${pgl_barang}, ${pgl_jumlah}, ${pgl_total}, ${pgl_idUser})
-        RETURNING pgl_id, pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total
+        RETURNING pgl_id, pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total, "pgl_idUser"
       `;
       return result[0];
     } catch (err) {
@@ -118,7 +117,7 @@ const pengeluaranService = {
         updates.push(`pgl_total = ${pgl_total}`);
       }
       if (pgl_idUser !== undefined) {
-        updates.push(`pgl_idUser = ${pgl_idUser}`);
+        updates.push(`"pgl_idUser" = ${pgl_idUser}`);
       }
 
       if (updates.length === 0) {
@@ -128,7 +127,7 @@ const pengeluaranService = {
       const query = `
         UPDATE pengeluaran SET ${updates.join(", ")}
         WHERE pgl_id = ${pgl_id}
-        RETURNING pgl_id, pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total, pgl_idUser
+        RETURNING pgl_id, pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total, "pgl_idUser"
       `;
 
       const result = await db.unsafe(query);

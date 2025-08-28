@@ -10,7 +10,7 @@ const supplierService = {
           sp_contact,
           sp_kategori,
           sp_alamat
-        FROM supplier WHERE sp_idUser = ${sp_idUser}
+        FROM supplier WHERE "sp_idUser" = ${sp_idUser}
       `;
       return result; 
     } catch (err) {
@@ -53,9 +53,9 @@ const supplierService = {
   createSupplier: async ({ sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser }) => {
     try {
       const result = await db`
-        INSERT INTO supplier (sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser)
+        INSERT INTO supplier (sp_nama, sp_contact, sp_kategori, sp_alamat, "sp_idUser")
         VALUES (${sp_nama}, ${sp_contact}, ${sp_kategori}, ${sp_alamat}, ${sp_idUser})
-        RETURNING sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser
+        RETURNING sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat, "sp_idUser"
       `;
       return result[0];
     } catch (err) {
@@ -78,7 +78,7 @@ const supplierService = {
         UPDATE supplier
         SET ${updatesString}
         WHERE sp_id = $${values.length + 1}
-        RETURNING sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser
+        RETURNING sp_id, sp_nama, sp_contact, sp_kategori, sp_alamat, "sp_idUser"
       `;
 
       const result = await db.unsafe(query, [...values, sp_id]);

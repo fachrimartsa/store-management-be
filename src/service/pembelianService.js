@@ -15,7 +15,7 @@ const pembelianService = {
         FROM pembelian p
         JOIN barang b ON p.pbl_barang = b.brg_id
         JOIN supplier s ON p.pbl_supplier = s.sp_id
-        WHERE p.pbl_idUser = ${pbl_idUser}
+        WHERE p."pbl_idUser" = ${pbl_idUser}
         ORDER BY p.pbl_tanggal ASC
       `;
 
@@ -83,7 +83,7 @@ const pembelianService = {
   createPembelian: async ({ pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_harga_beli, pbl_total, pbl_idUser }) => {
     try {
       const insertResult = await db`
-        INSERT INTO pembelian (pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_harga_beli, pbl_total, pbl_idUser)
+        INSERT INTO pembelian (pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_harga_beli, pbl_total, "pbl_idUser")
         VALUES (${pbl_tanggal}, ${pbl_barang}, ${pbl_supplier}, ${pbl_jumlah}, ${pbl_harga_beli}, ${pbl_total}, ${pbl_idUser})
         RETURNING *
       `;
@@ -122,7 +122,7 @@ const pembelianService = {
         updates.push(`pbl_total = ${pbl_total}`);
       }
       if (pbl_idUser !== undefined) {
-        updates.push(`pbl_idUser = ${pbl_idUser}`);
+        updates.push(`"pbl_idUser" = ${pbl_idUser}`);
       }
 
       if (updates.length === 0) {
@@ -132,7 +132,7 @@ const pembelianService = {
       const query = `
         UPDATE pembelian SET ${updates.join(", ")}
         WHERE pbl_id = ${pbl_id}
-        RETURNING pbl_id, pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_alamat, pbl_harga_beli, pbl_total
+        RETURNING pbl_id, pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_alamat, pbl_harga_beli, pbl_total, "pbl_idUser"
       `;
 
       const result = await db.unsafe(query);
