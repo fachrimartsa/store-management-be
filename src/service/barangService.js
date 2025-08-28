@@ -43,9 +43,9 @@ const barangService = {
   createBarang: async ({ brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser }) => {
     try {
       const result = await db`
-        INSERT INTO barang (brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser)
+        INSERT INTO barang (brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, "brg_idUser")
         VALUES (${brg_nama}, ${brg_kategori}, ${brg_harga_beli}, ${brg_stok}, ${brg_status}, ${brg_idUser})
-        RETURNING brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser
+        RETURNING brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, "brg_idUser"
       `;
       return result[0];
     } catch (err) {
@@ -68,7 +68,7 @@ const barangService = {
         UPDATE barang
         SET ${updatesString}
         WHERE brg_id = $${values.length + 1}
-        RETURNING brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, brg_idUser
+        RETURNING brg_id, brg_nama, brg_kategori, brg_harga_beli, brg_stok, brg_status, "brg_idUser"
       `;
 
       const result = await db.unsafe(query, [...values, brg_id]);
