@@ -1,9 +1,9 @@
 const penjualanService = require("../../service/penjualanService");
 
 const penjualanResolver = {
-  getAllPenjualan: async () => {
+  getAllPenjualan: async ({ pjl_idUser }) => {
     try {
-      return await penjualanService.getAllPenjualan();
+      return await penjualanService.getAllPenjualan({ pjl_idUser });
     } catch (error) {
       console.error("Error in getAllPenjualan resolver:", error);
       throw new Error("Failed to fetch penjualan records.");
@@ -33,17 +33,17 @@ const penjualanResolver = {
       throw new Error("Failed to fetch penjualan records.");
     }
   },
-  createPenjualan: async ({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_profit }) => {
+  createPenjualan: async ({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser }) => {
     try {
-      return await penjualanService.createPenjualan({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_profit });
+      return await penjualanService.createPenjualan({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser });
     } catch (error) {
       console.error("Error in createPenjualan resolver:", error);
       throw new Error("Failed to create penjualan record.");
     }
   },
-  updatePenjualan: async ({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total }) => {
+  updatePenjualan: async ({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_idUser }) => {
     try {
-      return await penjualanService.updatePenjualan({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total });
+      return await penjualanService.updatePenjualan({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_idUser });
     } catch (error) {
       console.error(`Error in updatePenjualan resolver for ID ${pjl_id}:`, error);
       throw new Error(`Failed to update penjualan record with ID ${pjl_id}.`);

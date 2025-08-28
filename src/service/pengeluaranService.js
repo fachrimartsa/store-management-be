@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
 const pengeluaranService = {
-  getAllPengeluaran: async () => {
+  getAllPengeluaran: async ({ pgl_idUser }) => {
     try {
       const result = await db`
         SELECT
@@ -9,8 +9,11 @@ const pengeluaranService = {
           pgl_tanggal,
           pgl_barang,
           pgl_jumlah,
-          pgl_total
+          pgl_total,
+          pgl_idUser
         FROM pengeluaran
+        WHERE pgl_idUser = ${pgl_idUser}
+        ORDER BY pgl_tanggal ASC
       `;
 
       const formattedData = result.map(row => {
@@ -84,11 +87,11 @@ const pengeluaranService = {
     }
   },
 
-  createPengeluaran: async ({ pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total }) => {
+  createPengeluaran: async ({ pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total, pgl_idUser }) => {
     try {
       const result = await db`
-        INSERT INTO pengeluaran (pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total)
-        VALUES (${pgl_tanggal}, ${pgl_barang}, ${pgl_jumlah}, ${pgl_total})
+        INSERT INTO pengeluaran (pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total, pgl_idUser)
+        VALUES (${pgl_tanggal}, ${pgl_barang}, ${pgl_jumlah}, ${pgl_total}, ${pgl_idUser})
         RETURNING pgl_id, pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total
       `;
       return result[0];
@@ -98,7 +101,7 @@ const pengeluaranService = {
     }
   },
 
-  updatePengeluaran: async ({ pgl_id, pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total }) => {
+  updatePengeluaran: async ({ pgl_id, pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total, pgl_idUser }) => {
     try {
       const updates = [];
 
@@ -114,6 +117,9 @@ const pengeluaranService = {
       if (pgl_total !== undefined) {
         updates.push(`pgl_total = ${pgl_total}`);
       }
+      if (pgl_idUser !== undefined) {
+        updates.push(`pgl_idUser = ${pgl_idUser}`);
+      }
 
       if (updates.length === 0) {
         throw new Error("Tidak ada data yang diberikan untuk update.");
@@ -122,7 +128,7 @@ const pengeluaranService = {
       const query = `
         UPDATE pengeluaran SET ${updates.join(", ")}
         WHERE pgl_id = ${pgl_id}
-        RETURNING pgl_id, pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total
+        RETURNING pgl_id, pgl_tanggal, pgl_barang, pgl_jumlah, pgl_total, pgl_idUser
       `;
 
       const result = await db.unsafe(query);

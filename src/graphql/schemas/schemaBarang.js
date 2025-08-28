@@ -10,7 +10,7 @@ const schemaBarang = `
     }
 
     extend type Query {
-        getAllBarang: [Barang!]!
+        getBarangByUser(brg_idUser: Int!): [Barang!]!
         getBarangById(brg_id: ID!): Barang
         getTotalStok: Int!
     }

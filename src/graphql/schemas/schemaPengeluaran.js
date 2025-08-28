@@ -5,10 +5,11 @@ const schemaPengeluaran = `
   pgl_barang: String!
   pgl_jumlah: Int!
   pgl_total: Float!
+  pgl_idUser: Int!
 }
 
 extend type Query {
-  getAllPengeluaran: [Pengeluaran!]!
+  getAllPengeluaran(pgl_idUser: Int!): [Pengeluaran!]!
   getPengeluaranById(pgl_id: ID!): Pengeluaran
   getPengeluaranMonth: Float!
 }
@@ -19,6 +20,7 @@ extend type Mutation {
     pgl_barang: String!
     pgl_jumlah: Int!
     pgl_total: Float!
+    pgl_idUser: Int!
   ): Pengeluaran!
   updatePengeluaran(
     pgl_id: ID!
@@ -26,6 +28,7 @@ extend type Mutation {
     pgl_barang: String
     pgl_jumlah: Int
     pgl_total: Float
+    pgl_idUser: Int
   ): Pengeluaran!
   deletePengeluaran(pgl_id: ID!): Boolean
 }

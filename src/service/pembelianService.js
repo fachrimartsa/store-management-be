@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
 const pembelianService = {
-  getAllPembelian: async () => {
+  getAllPembelian: async ({ pbl_idUser }) => {
     try {
       const result = await db`
         SELECT
@@ -10,13 +10,13 @@ const pembelianService = {
           b.brg_nama,
           s.sp_nama,
           p.pbl_jumlah,
-          p.pbl_alamat,
           p.pbl_harga_beli,
           p.pbl_total
         FROM pembelian p
         JOIN barang b ON p.pbl_barang = b.brg_id
         JOIN supplier s ON p.pbl_supplier = s.sp_id
-        ORDER BY p.pbl_tanggal DESC
+        WHERE p.pbl_idUser = ${pbl_idUser}
+        ORDER BY p.pbl_tanggal ASC
       `;
 
       const formattedData = result.map(row => {
@@ -52,7 +52,6 @@ const pembelianService = {
           pbl_barang,
           pbl_supplier,
           pbl_jumlah,
-          pbl_alamat,
           pbl_harga_beli,
           pbl_total
         FROM pembelian
@@ -81,11 +80,11 @@ const pembelianService = {
     }
   },
 
-  createPembelian: async ({ pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_alamat, pbl_harga_beli, pbl_total }) => {
+  createPembelian: async ({ pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_harga_beli, pbl_total, pbl_idUser }) => {
     try {
       const insertResult = await db`
-        INSERT INTO pembelian (pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_alamat, pbl_harga_beli, pbl_total)
-        VALUES (${pbl_tanggal}, ${pbl_barang}, ${pbl_supplier}, ${pbl_jumlah}, ${pbl_alamat}, ${pbl_harga_beli}, ${pbl_total})
+        INSERT INTO pembelian (pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_harga_beli, pbl_total, pbl_idUser)
+        VALUES (${pbl_tanggal}, ${pbl_barang}, ${pbl_supplier}, ${pbl_jumlah}, ${pbl_harga_beli}, ${pbl_total}, ${pbl_idUser})
         RETURNING *
       `;
 
@@ -100,7 +99,7 @@ const pembelianService = {
     }
   },
 
-  updatePembelian: async ({ pbl_id, pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_alamat, pbl_harga_beli, pbl_total }) => {
+  updatePembelian: async ({ pbl_id, pbl_tanggal, pbl_barang, pbl_supplier, pbl_jumlah, pbl_harga_beli, pbl_total, pbl_idUser }) => {
     try {
       const updates = [];
 
@@ -116,14 +115,14 @@ const pembelianService = {
       if (pbl_jumlah !== undefined) {
         updates.push(`pbl_jumlah = ${pbl_jumlah}`);
       }
-      if (pbl_alamat !== undefined) {
-        updates.push(`pbl_alamat = ${pbl_alamat}`);
-      }
       if (pbl_harga_beli !== undefined) {
         updates.push(`pbl_harga_beli = ${pbl_harga_beli}`);
       }
       if (pbl_total !== undefined) {
         updates.push(`pbl_total = ${pbl_total}`);
+      }
+      if (pbl_idUser !== undefined) {
+        updates.push(`pbl_idUser = ${pbl_idUser}`);
       }
 
       if (updates.length === 0) {

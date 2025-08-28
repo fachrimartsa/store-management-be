@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
 const penjualanService = {
-  getAllPenjualan: async () => {
+  getAllPenjualan: async ({ pjl_idUser }) => {
     try {
       const result = await db`
         SELECT
@@ -14,8 +14,10 @@ const penjualanService = {
           p.pjl_harga_jual,
           p.pjl_total,
           p.pjl_profit
+          p.pjl_idUser
         FROM penjualan p
         JOIN barang b ON p.pjl_barang = b.brg_id
+        WHERE p.pjl_idUser = ${pjl_idUser}
         ORDER BY p.pjl_tanggal ASC
       `;
 
@@ -94,11 +96,11 @@ const penjualanService = {
     }
   },
 
-  createPenjualan: async ({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_profit }) => {
+  createPenjualan: async ({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser }) => {
     try {
       const result = await db`
-        INSERT INTO penjualan (pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_profit)
-        VALUES (${pjl_tanggal}, ${pjl_barang}, ${pjl_jumlah}, ${pjl_platform}, ${pjl_alamat}, ${pjl_harga_jual}, ${pjl_total}, ${pjl_profit})
+        INSERT INTO penjualan (pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser)
+        VALUES (${pjl_tanggal}, ${pjl_barang}, ${pjl_jumlah}, ${pjl_platform}, ${pjl_alamat}, ${pjl_harga_jual}, ${pjl_total}, ${pjl_profit}, ${pjl_idUser})
         RETURNING *
       `;
 
@@ -114,7 +116,7 @@ const penjualanService = {
     }
   },
 
-  updatePenjualan: async ({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total }) => {
+  updatePenjualan: async ({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_idUser}) => {
     try {
       const updates = [];
 
@@ -125,13 +127,14 @@ const penjualanService = {
       if (pjl_alamat !== undefined) updates.push(`pjl_alamat = ${pjl_alamat}`);
       if (pjl_harga_jual !== undefined) updates.push(`pjl_harga_jual = ${pjl_harga_jual}`);
       if (pjl_total !== undefined) updates.push(`pjl_total = ${pjl_total}`);
+      if (pjl_idUser !== undefined) updates.push(`pjl_idUser = ${pjl_idUser}`);
 
       if (updates.length === 0) throw new Error("Tidak ada data yang diberikan untuk update.");
 
       const query = `
         UPDATE penjualan SET ${updates.join(", ")}
         WHERE pjl_id = ${pjl_id}
-        RETURNING pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total
+        RETURNING pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_idUser
       `;
 
       const result = await db.unsafe(query);

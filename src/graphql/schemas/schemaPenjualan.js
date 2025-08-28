@@ -6,14 +6,15 @@ const schemaPenjualan = `
   brg_nama: String!
   pjl_jumlah: Int!
   pjl_platform: String!
-  pjl_alamat: String!
+  pjl_telephone: String!
   pjl_harga_jual: Float!
   pjl_total: Float!
   pjl_profit: Float!
+  pjl_idUser: Int!
 }
 
 extend type Query {
-  getAllPenjualan: [Penjualan!]!
+  getAllPenjualan(pjl_idUser: Int!): [Penjualan!]!
   getPenjualanById(pjl_id: ID!): Penjualan
   getPenjualanMonth: Float!
   getProfitMonth: Float!
@@ -25,10 +26,11 @@ extend type Mutation {
     pjl_barang: Int!
     pjl_jumlah: Int! 
     pjl_platform: String!
-    pjl_alamat: String!
+    pjl_telephone: String!
     pjl_harga_jual: Float!
     pjl_total: Float!
     pjl_profit: Float!
+    pjl_idUser: Int!
   ): Penjualan!
   updatePenjualan(
     pjl_id: ID!
@@ -36,9 +38,10 @@ extend type Mutation {
     pjl_barang: Int
     pjl_jumlah: Int 
     pjl_platform: String
-    pjl_alamat: String
+    pjl_telephone: String
     pjl_harga_jual: Float
     pjl_total: Float
+    pjl_idUser: Int
   ): Penjualan!
   deletePenjualan(pjl_id: ID!): Boolean
 }

@@ -7,13 +7,13 @@ const schemaPembelian = `
   pbl_supplier: Int!
   sp_nama: String!
   pbl_jumlah: Int!
-  pbl_alamat: String!
   pbl_harga_beli: Float!
   pbl_total: Float!
+  pbl_idUser: Int!
 }
 
 extend type Query {
-  getAllPembelian: [Pembelian!]!
+  getAllPembelian(pbl_idUser: Int!): [Pembelian!]!
   getPembelianById(pbl_id: ID!): Pembelian
   getPembelianMonth: Float!
 }
@@ -24,9 +24,9 @@ extend type Mutation {
     pbl_barang: Int!
     pbl_supplier: Int!
     pbl_jumlah: Int!
-    pbl_alamat: String!
     pbl_harga_beli: Float!
     pbl_total: Float!
+    pbl_idUser: Int!
   ): Pembelian!
   updatePembelian(
     pbl_id: ID!
@@ -34,9 +34,9 @@ extend type Mutation {
     pbl_barang: Int
     pbl_supplier: Int
     pbl_jumlah: Int
-    pbl_alamat: String
     pbl_harga_beli: Float
     pbl_total: Float
+    pbl_idUser: Int
   ): Pembelian!
   deletePembelian(pbl_id: ID!): Boolean
 }
