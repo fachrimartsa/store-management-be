@@ -13,7 +13,7 @@ const penjualanService = {
           p.pjl_telephone,
           p.pjl_harga_jual,
           p.pjl_total,
-          p.pjl_profit,
+          p.pjl_profit
         FROM penjualan p
         JOIN barang b ON p.pjl_barang = b.brg_id
         WHERE p."pjl_idUser" = ${pjl_idUser}
