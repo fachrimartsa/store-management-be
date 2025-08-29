@@ -97,6 +97,7 @@ const penjualanService = {
   },
 
   createPenjualan: async ({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser }) => {
+    console.log(pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser );
     try {
       const result = await db`
         INSERT INTO penjualan (pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_profit, "pjl_idUser")
