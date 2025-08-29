@@ -96,11 +96,11 @@ const penjualanService = {
     }
   },
 
-  createPenjualan: async ({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser }) => {
+  createPenjualan: async ({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser }) => {
     try {
       const result = await db`
-        INSERT INTO penjualan (pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_profit, "pjl_idUser")
-        VALUES (${pjl_tanggal}, ${pjl_barang}, ${pjl_jumlah}, ${pjl_platform}, ${pjl_alamat}, ${pjl_harga_jual}, ${pjl_total}, ${pjl_profit}, ${pjl_idUser})
+        INSERT INTO penjualan (pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_profit, "pjl_idUser")
+        VALUES (${pjl_tanggal}, ${pjl_barang}, ${pjl_jumlah}, ${pjl_platform}, ${pjl_telephone}, ${pjl_harga_jual}, ${pjl_total}, ${pjl_profit}, ${pjl_idUser})
         RETURNING *
       `;
 
@@ -115,7 +115,7 @@ const penjualanService = {
     }
   },
 
-  updatePenjualan: async ({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, pjl_idUser}) => {
+  updatePenjualan: async ({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_idUser}) => {
     try {
       const updates = [];
 
@@ -123,7 +123,7 @@ const penjualanService = {
       if (pjl_barang !== undefined) updates.push(`pjl_barang = ${pjl_barang}`);
       if (pjl_jumlah !== undefined) updates.push(`pjl_jumlah = ${pjl_jumlah}`);
       if (pjl_platform !== undefined) updates.push(`pjl_platform = ${pjl_platform}`);
-      if (pjl_alamat !== undefined) updates.push(`pjl_alamat = ${pjl_alamat}`);
+      if (pjl_telephone !== undefined) updates.push(`pjl_telehpone = ${pjl_telephone}`);
       if (pjl_harga_jual !== undefined) updates.push(`pjl_harga_jual = ${pjl_harga_jual}`);
       if (pjl_total !== undefined) updates.push(`pjl_total = ${pjl_total}`);
       if (pjl_idUser !== undefined) updates.push(`"pjl_idUser" = ${pjl_idUser}`);
