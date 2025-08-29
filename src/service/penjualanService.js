@@ -10,7 +10,7 @@ const penjualanService = {
           b.brg_nama,
           p.pjl_jumlah,
           p.pjl_platform,
-          p.pjl_alamat,
+          p.pjl_telephone,
           p.pjl_harga_jual,
           p.pjl_total,
           p.pjl_profit
@@ -83,7 +83,7 @@ const penjualanService = {
           pjl_barang,
           pjl_jumlah,
           pjl_platform,
-          pjl_alamat,
+          pjl_telephone,
           pjl_harga_jual,
           pjl_total
         FROM penjualan
@@ -133,7 +133,7 @@ const penjualanService = {
       const query = `
         UPDATE penjualan SET ${updates.join(", ")}
         WHERE pjl_id = ${pjl_id}
-        RETURNING pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_alamat, pjl_harga_jual, pjl_total, "pjl_idUser"
+        RETURNING pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, "pjl_idUser"
       `;
 
       const result = await db.unsafe(query);
