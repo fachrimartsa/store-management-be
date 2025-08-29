@@ -15,7 +15,7 @@ const schemaPembelian = `
 extend type Query {
   getAllPembelian(pbl_idUser: Int!): [Pembelian!]!
   getPembelianById(pbl_id: ID!): Pembelian
-  getPembelianMonth: Float!
+  getPembelianMonth(pbl_idUser: Int!): Float!
 }
 
 extend type Mutation {

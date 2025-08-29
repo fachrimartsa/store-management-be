@@ -17,17 +17,17 @@ const penjualanResolver = {
       throw new Error(`Failed to fetch penjualan record with ID ${pjl_id}.`);
     }
   },
-  getPenjualanMonth: async () => {
+  getPenjualanMonth: async ({ pjl_idUser }) => {
     try {
-      return await penjualanService.getPenjualanMonth();
+      return await penjualanService.getPenjualanMonth({pjl_idUser});
     } catch (error) {
       console.error("Error in getPenjualanMonth resolver:", error);
       throw new Error("Failed to fetch penjualan records.");
     }
   },
-  getProfitMonth: async () => {
+  getProfitMonth: async ({ pjl_idUser }) => {
     try {
-      return await penjualanService.getProfitMonth();
+      return await penjualanService.getProfitMonth({ pjl_idUser });
     } catch (error) {
       console.error("Error in getProfitMonth resolver:", error);
       throw new Error("Failed to fetch penjualan records.");

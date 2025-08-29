@@ -69,7 +69,7 @@ const pengeluaranService = {
     }
   },
 
-  getPengeluaranMonth: async () => {
+  getPengeluaranMonth: async ({ pgl_idUser }) => {
     try {
       const result = await db`
         SELECT
@@ -77,6 +77,7 @@ const pengeluaranService = {
         FROM pengeluaran
         WHERE EXTRACT(MONTH FROM pgl_tanggal) = EXTRACT(MONTH FROM CURRENT_DATE)
           AND EXTRACT(YEAR FROM pgl_tanggal) = EXTRACT(YEAR FROM CURRENT_DATE)
+          AND "pgl_idUser" = ${pgl_idUser}
       `;
 
       return parseFloat(result[0]?.total_bulan_ini || 0);

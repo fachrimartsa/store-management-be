@@ -28,10 +28,10 @@ const barangService = {
     }
   },
 
-  getTotalStok: async () => {
+  getTotalStok: async ({ brg_idUser }) => {
     try {
       const result = await db`
-        SELECT SUM(brg_stok) AS total_stok FROM barang
+        SELECT SUM(brg_stok) AS total_stok FROM barang WHERE brg_idUser = ${brg_idUser}
       `;
       return result[0]?.total_stok || 0;
     } catch (err) {

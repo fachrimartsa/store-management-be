@@ -12,7 +12,7 @@ const schemaBarang = `
     extend type Query {
         getAllBarang(brg_idUser: Int!): [Barang!]!
         getBarangById(brg_id: ID!): Barang
-        getTotalStok: Int!
+        getTotalStok(brg_idUser: Int!): Int!
     }
 
     extend type Mutation {

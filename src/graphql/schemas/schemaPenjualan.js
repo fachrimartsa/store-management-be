@@ -16,8 +16,8 @@ const schemaPenjualan = `
 extend type Query {
   getAllPenjualan(pjl_idUser: Int!): [Penjualan!]!
   getPenjualanById(pjl_id: ID!): Penjualan
-  getPenjualanMonth: Float!
-  getProfitMonth: Float!
+  getPenjualanMonth(pjl_idUser: Int!): Float!
+  getProfitMonth(pjl_idUser: Int!): Float!
 }
 
 extend type Mutation {

@@ -17,9 +17,9 @@ const pengeluaranResolver = {
       throw new Error(`Failed to fetch pengeluaran record with ID ${pgl_id}.`);
     }
   },
-  getPengeluaranMonth: async () => {
+  getPengeluaranMonth: async ({ pgl_idUser }) => {
     try {
-      return await pengeluaranService.getPengeluaranMonth();
+      return await pengeluaranService.getPengeluaranMonth({pgl_idUser});
     } catch (error) {
       console.error("Error in getPengeluaranMonth resolver:", error);
       throw new Error("Failed to fetch pengeluaran records.");

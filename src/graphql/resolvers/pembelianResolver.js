@@ -17,9 +17,9 @@ const pembelianResolver = {
       throw new Error(`Failed to fetch pembelian record with ID ${pbl_id}.`);
     }
   },
-  getPembelianMonth: async () => {
+  getPembelianMonth: async ({ pbl_idUser }) => {
     try {
-      return await pembelianService.getPembelianMonth();
+      return await pembelianService.getPembelianMonth({ pbl_idUser });
     } catch (error) {
       console.error("Error in getPembelianMonth resolver:", error);
       throw new Error("Failed to fetch pembelian records.");

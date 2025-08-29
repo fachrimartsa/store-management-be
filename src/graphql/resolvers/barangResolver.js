@@ -17,9 +17,9 @@ const barangResolver = {
       throw new Error(`Failed to fetch barang with ID ${brg_id}.`);
     }
   },
-  getTotalStok: async () => {
+  getTotalStok: async ({ brg_idUser }) => {
     try {
-      return await barangService.getTotalStok();
+      return await barangService.getTotalStok({brg_idUser});
     } catch (error) {
       console.error("Error in getTotalStok resolver:", error);
       throw new Error("Failed to fetch stok.");

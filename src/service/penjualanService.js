@@ -41,7 +41,7 @@ const penjualanService = {
     }
   },
 
-  getPenjualanMonth: async () => {
+  getPenjualanMonth: async ({ pjl_idUser }) => {
     try {
       const result = await db`
         SELECT 
@@ -49,6 +49,7 @@ const penjualanService = {
         FROM penjualan
         WHERE EXTRACT(MONTH FROM pjl_tanggal) = EXTRACT(MONTH FROM CURRENT_DATE)
           AND EXTRACT(YEAR FROM pjl_tanggal) = EXTRACT(YEAR FROM CURRENT_DATE)
+          AND "pjl_idUser" = ${pjl_idUser}
       `;
       return parseFloat(result[0]?.total_bulan_ini || 0);
     } catch (err) {
@@ -57,7 +58,7 @@ const penjualanService = {
     }
   },
 
-  getProfitMonth: async () => {
+  getProfitMonth: async ({ pjl_idUser }) => {
     try {
       const result = await db`
         SELECT 
@@ -65,6 +66,7 @@ const penjualanService = {
         FROM penjualan
         WHERE EXTRACT(MONTH FROM pjl_tanggal) = EXTRACT(MONTH FROM CURRENT_DATE)
           AND EXTRACT(YEAR FROM pjl_tanggal) = EXTRACT(YEAR FROM CURRENT_DATE)
+          AND "pjl_idUser" = ${pjl_idUser}
       `;
       return parseFloat(result[0]?.total_bulan_ini || 0);
     } catch (err) {

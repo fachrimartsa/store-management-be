@@ -64,14 +64,15 @@ const pembelianService = {
     }
   },
 
-  getPembelianMonth: async () => {
+  getPembelianMonth: async ({ pbl_idUser }) => {
     try {
       const result = await db`
         SELECT 
           COALESCE(SUM(pbl_total), 0) AS total_bulan_ini
         FROM pembelian
         WHERE EXTRACT(MONTH FROM pbl_tanggal) = EXTRACT(MONTH FROM CURRENT_DATE)
-          AND EXTRACT(YEAR FROM pbl_tanggal) = EXTRACT(YEAR FROM CURRENT_DATE)
+        AND EXTRACT(YEAR FROM pbl_tanggal) = EXTRACT(YEAR FROM CURRENT_DATE)
+        AND "pbl_idUser" = ${pbl_idUser}
       `;
       return parseFloat(result[0]?.total_bulan_ini || 0);
     } catch (err) {
