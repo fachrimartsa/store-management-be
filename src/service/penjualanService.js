@@ -5,19 +5,15 @@ const penjualanService = {
     try {
       const result = await db`
         SELECT
-          p.pjl_id,
-          p.pjl_tanggal,
-          b.brg_nama,
-          p.pjl_jumlah,
-          p.pjl_platform,
-          p.pjl_telephone,
-          p.pjl_harga_jual,
-          p.pjl_total,
-          p.pjl_profit
-        FROM penjualan p
-        JOIN barang b ON p.pjl_barang = b.brg_id
-        WHERE p."pjl_idUser" = ${pjl_idUser}
-        ORDER BY p.pjl_tanggal ASC
+          pjl_id,
+          pjl_tanggal,
+          pjl_platform,
+          pjl_telephone,
+          pjl_total,
+          pjl_profit
+        FROM penjualan 
+        WHERE "pjl_idUser" = ${pjl_idUser}
+        ORDER BY pjl_tanggal ASC
       `;
 
       const formattedData = result.map(row => {
@@ -29,7 +25,6 @@ const penjualanService = {
           row.pjl_tanggal = `${yyyy}-${mm}-${dd}`;
         }
         if (typeof row.pjl_total === 'number') row.pjl_total = row.pjl_total.toFixed(2);
-        if (typeof row.pjl_harga_jual === 'number') row.pjl_harga_jual = row.pjl_harga_jual.toFixed(2);
         if (typeof row.pjl_profit === 'number') row.pjl_profit = row.pjl_profit.toFixed(2);
         return row;
       });
@@ -81,12 +76,10 @@ const penjualanService = {
         SELECT
           pjl_id,
           pjl_tanggal,
-          pjl_barang,
-          pjl_jumlah,
           pjl_platform,
           pjl_telephone,
-          pjl_harga_jual,
-          pjl_total
+          pjl_total,
+          pjl_profit
         FROM penjualan
         WHERE pjl_id = ${pjl_id}
       `;
@@ -97,16 +90,12 @@ const penjualanService = {
     }
   },
 
-  createPenjualan: async ({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser }) => {
+  createPenjualan: async ({ pjl_tanggal, pjl_platform, pjl_telephone, pjl_total, pjl_profit, pjl_idUser }) => {
     try {
       const result = await db`
-        INSERT INTO penjualan (pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_profit, "pjl_idUser")
-        VALUES (${pjl_tanggal}, ${pjl_barang}, ${pjl_jumlah}, ${pjl_platform}, ${pjl_telephone}, ${pjl_harga_jual}, ${pjl_total}, ${pjl_profit}, ${pjl_idUser})
+        INSERT INTO penjualan (pjl_tanggal, pjl_platform, pjl_telephone, pjl_total, pjl_profit, "pjl_idUser")
+        VALUES (${pjl_tanggal}, ${pjl_platform}, ${pjl_telephone}, ${pjl_total}, ${pjl_profit}, ${pjl_idUser})
         RETURNING *
-      `;
-
-      await db`
-        UPDATE barang SET brg_stok = brg_stok - ${pjl_jumlah} WHERE brg_id = ${pjl_barang}
       `;
 
       return result[0];
@@ -116,16 +105,13 @@ const penjualanService = {
     }
   },
 
-  updatePenjualan: async ({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_idUser}) => {
+  updatePenjualan: async ({ pjl_id, pjl_tanggal, pjl_platform, pjl_telephone, pjl_total, pjl_idUser}) => {
     try {
       const updates = [];
 
       if (pjl_tanggal !== undefined) updates.push(`pjl_tanggal = ${pjl_tanggal}`);
-      if (pjl_barang !== undefined) updates.push(`pjl_barang = ${pjl_barang}`);
-      if (pjl_jumlah !== undefined) updates.push(`pjl_jumlah = ${pjl_jumlah}`);
       if (pjl_platform !== undefined) updates.push(`pjl_platform = ${pjl_platform}`);
       if (pjl_telephone !== undefined) updates.push(`pjl_telehpone = ${pjl_telephone}`);
-      if (pjl_harga_jual !== undefined) updates.push(`pjl_harga_jual = ${pjl_harga_jual}`);
       if (pjl_total !== undefined) updates.push(`pjl_total = ${pjl_total}`);
       if (pjl_idUser !== undefined) updates.push(`"pjl_idUser" = ${pjl_idUser}`);
 
@@ -134,7 +120,7 @@ const penjualanService = {
       const query = `
         UPDATE penjualan SET ${updates.join(", ")}
         WHERE pjl_id = ${pjl_id}
-        RETURNING pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, "pjl_idUser"
+        RETURNING pjl_id, pjl_tanggal, pjl_platform, pjl_telephone, pjl_total, "pjl_idUser"
       `;
 
       const result = await db.unsafe(query);

@@ -33,17 +33,17 @@ const penjualanResolver = {
       throw new Error("Failed to fetch penjualan records.");
     }
   },
-  createPenjualan: async ({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser }) => {
+  createPenjualan: async ({ pjl_tanggal, pjl_platform, pjl_telephone, pjl_total, pjl_profit, pjl_idUser }) => {
     try {
-      return await penjualanService.createPenjualan({ pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_profit, pjl_idUser });
+      return await penjualanService.createPenjualan({ pjl_tanggal, pjl_platform, pjl_telephone, pjl_total, pjl_profit, pjl_idUser });
     } catch (error) {
       console.error("Error in createPenjualan resolver:", error);
       throw new Error("Failed to create penjualan record.");
     }
   },
-  updatePenjualan: async ({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_idUser }) => {
+  updatePenjualan: async ({ pjl_id, pjl_tanggal, pjl_platform, pjl_telephone, pjl_total, pjl_idUser }) => {
     try {
-      return await penjualanService.updatePenjualan({ pjl_id, pjl_tanggal, pjl_barang, pjl_jumlah, pjl_platform, pjl_telephone, pjl_harga_jual, pjl_total, pjl_idUser });
+      return await penjualanService.updatePenjualan({ pjl_id, pjl_tanggal, pjl_platform, pjl_telephone, pjl_total, pjl_idUser });
     } catch (error) {
       console.error(`Error in updatePenjualan resolver for ID ${pjl_id}:`, error);
       throw new Error(`Failed to update penjualan record with ID ${pjl_id}.`);
