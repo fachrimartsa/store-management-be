@@ -41,13 +41,20 @@ const detailPenjualanService = {
     }
   },
 
-  createDetail: async ({ dtl_id, pjl_id, brg_id, dtl_jumlah, dtl_idUser }) => {
+  createDetail: async ({ pjl_id, brg_id, dtl_jumlah, dtl_idUser }) => {
     try {
       const result = await db`
-        INSERT INTO detail_penjualan (dtl_id, pjl_id, brg_id, dtl_jumlah, "dtl_idUser")
-        VALUES (${dtl_id}, ${pjl_id}, ${brg_id}, ${dtl_jumlah}, ${dtl_idUser})
+        INSERT INTO detail_penjualan ( pjl_id, brg_id, dtl_jumlah, "dtl_idUser")
+        VALUES (${pjl_id}, ${brg_id}, ${dtl_jumlah}, ${dtl_idUser})
         RETURNING *
       `;
+      
+      await db`
+        UPDATE barang
+        SET brg_stok = brg_stok - ${dtl_jumlah}
+        WHERE brg_id = ${brg_id}
+      `;
+      
       return result[0];
     } catch (err) {
       console.error("Error creating new sales detail:", err);

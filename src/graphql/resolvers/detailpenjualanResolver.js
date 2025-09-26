@@ -17,9 +17,9 @@ const detailpenjualanResolver = {
         throw new Error("Failed to fetch sales detail records.");
         }
     },
-    createDetailsss: async ({ dtl_id, pjl_id, brg_id, dtl_jumlah, dtl_idUser }) => {
+    createDetail: async ({ pjl_id, brg_id, dtl_jumlah, dtl_idUser }) => {
       try {
-        return await detailpenjualanService.createDetail({ dtl_id, pjl_id, brg_id, dtl_jumlah, dtl_idUser });
+        return await detailpenjualanService.createDetail({ pjl_id, brg_id, dtl_jumlah, dtl_idUser });
       } catch (error) {
         console.error("Error in createDetailsss resolver:", error);
         throw new Error("Failed to create new sales detail record.");

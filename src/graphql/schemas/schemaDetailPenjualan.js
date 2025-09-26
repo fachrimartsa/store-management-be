@@ -13,8 +13,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  createDetailsss(
-    dtl_id: ID!
+  createDetail(
     pjl_id: Int!
     brg_id: Int!
     dtl_jumlah: Int!
