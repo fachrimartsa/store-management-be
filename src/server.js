@@ -1,31 +1,24 @@
-const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
-const schemas = require('./graphql/schemas/schemas');
-const resolvers = require('./graphql/resolvers/resolvers');
-const cors = require('cors');
+const express = require('express')
+const { graphqlHTTP } = require('express-graphql')
+const schemas = require('./graphql/schemas/schemas')
+const resolvers = require('./graphql/resolvers/resolvers')
+const cors = require('cors')
 
-const app = express();
-
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:4000', 'https://fachrimartsa.github.io/store-management-fe/'];
+const app = express()
 
 app.use(cors({
-  origin: '*' ,
+  origin: '*',
   credentials: true
-}));
+}))
 
 app.get('/', (req, res) => {
-  res.send('Backend is running!');
-});
-
+  res.send('Backend is running!')
+})
 
 app.use('/graphql', graphqlHTTP({
   schema: schemas,
   rootValue: resolvers,
-  graphiql: true,
-}));
+  graphiql: true
+}))
 
-const PORT = 4000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}/graphql`);
-});
+module.exports = app
