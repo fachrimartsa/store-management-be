@@ -11,7 +11,6 @@ const schemaSupplier = `
     extend type Query {
         getAllSuppliers(sp_idUser: Int!): [Supplier!]!
         getSupplierById(sp_id: ID!): Supplier
-        getTotalSupplier: Int!
     }
 
     extend type Mutation {

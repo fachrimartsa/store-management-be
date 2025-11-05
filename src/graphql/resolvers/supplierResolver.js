@@ -17,16 +17,6 @@ const supplierResolver = {
       throw new Error(`Failed to fetch supplier with ID ${sp_id}.`);
     }
   },
-
-  getTotalSupplier: async () => {
-    try {
-      return await supplierService.getTotalSupplier();
-    } catch (error) {
-      console.error("Error in getTotalSupplier resolver:", error);
-      throw new Error("Failed to fetch total suppliers.");
-    }
-  },
-
   createSupplier: async ({ sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser }) => {
     try {
       return await supplierService.createSupplier({ sp_nama, sp_contact, sp_kategori, sp_alamat, sp_idUser });

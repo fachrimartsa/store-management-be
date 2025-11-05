@@ -9,6 +9,14 @@ const penarikanResolver = {
         throw new Error("Failed to fetch penarikan records.");
         }
     },
+    getPenarikanMonth: async ({ pnr_idUser }) => {
+      try {
+        return await penarikanService.getPenarikanMonth({ pnr_idUser });
+      } catch (error) {
+        console.error("Error in getPenarikanMonth resolver:", error);
+        throw new Error("Failed to fetch total penarikan.");
+      }
+    },
     createPenarikan: async ({ pnr_idUser, pnr_tanggal, pnr_jumlah }) => {
       try {
         return await penarikanService.createPenarikan({ pnr_idUser, pnr_tanggal, pnr_jumlah });
@@ -19,4 +27,4 @@ const penarikanResolver = {
     },
 };
 
-module.exports = detailpenjualanResolver;
+module.exports = penarikanResolver;
