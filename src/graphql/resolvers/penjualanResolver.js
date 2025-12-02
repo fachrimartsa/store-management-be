@@ -1,9 +1,9 @@
 const penjualanService = require("../../service/penjualanService");
 
 const penjualanResolver = {
-  getAllPenjualan: async ({ pjl_idUser }) => {
+  getAllPenjualan: async ({ pjl_idUser, Limit, Offset }) => {
     try {
-      return await penjualanService.getAllPenjualan({ pjl_idUser });
+      return await penjualanService.getAllPenjualan({ pjl_idUser, Limit, Offset });
     } catch (error) {
       console.error("Error in getAllPenjualan resolver:", error);
       throw new Error("Failed to fetch penjualan records.");

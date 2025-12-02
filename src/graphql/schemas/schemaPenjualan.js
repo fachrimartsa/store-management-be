@@ -10,7 +10,7 @@ const schemaPenjualan = `
 }
 
 extend type Query {
-  getAllPenjualan(pjl_idUser: Int!): [Penjualan!]!
+  getAllPenjualan(pjl_idUser: Int!, limit: Int!, offset: Int!): [Penjualan!]!
   getPenjualanById(pjl_id: ID!): Penjualan
   getPenjualanMonth(pjl_idUser: Int!): Float!
   getProfitMonth(pjl_idUser: Int!): Float!
