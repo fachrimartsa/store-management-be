@@ -5,7 +5,7 @@ const penjualanResolver = {
     try {
       return await penjualanService.getAllPenjualan({ pjl_idUser, limit, offset });
     } catch (error) {
-      console.error("Error in getAllPenjualan resolver:", error);
+      console.error("Error in getAllPenjualan resolver:", error.message);
       throw new Error("Failed to fetch penjualan records.");
     }
   },

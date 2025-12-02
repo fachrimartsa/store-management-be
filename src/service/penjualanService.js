@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
 const penjualanService = {
-  getAllPenjualan: async ({ pjl_idUser, limit, offset }) => {
+  getAllPenjualan: async ({ pjl_idUser, limit = 10, offset = 0 }) => {
     try {
       const result = await db`
         SELECT
@@ -33,7 +33,7 @@ const penjualanService = {
 
       return formattedData;
     } catch (err) {
-      console.error("Error mengambil daftar penjualan:", err);
+      console.error("SQL ERROR:", err);
       throw new Error("Gagal mengambil daftar penjualan dari database.");
     }
   },
