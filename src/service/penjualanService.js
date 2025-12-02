@@ -12,7 +12,7 @@ const penjualanService = {
           pjl_total,
           pjl_profit
         FROM penjualan 
-        WHERE pjl_idUser = ${pjl_idUser}
+        WHERE "pjl_idUser" = ${pjl_idUser}
         ORDER BY pjl_tanggal ASC
         LIMIT ${limit}
         OFFSET ${offset}
