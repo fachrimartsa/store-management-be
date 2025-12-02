@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
 const penjualanService = {
-  getAllPenjualan: async ({ pjl_idUser, Limit, Offset }) => {
+  getAllPenjualan: async ({ pjl_idUser, limit, offset }) => {
     try {
       const result = await db`
         SELECT
@@ -14,8 +14,8 @@ const penjualanService = {
         FROM penjualan 
         WHERE pjl_idUser = ${pjl_idUser}
         ORDER BY pjl_tanggal ASC
-        LIMIT ${Limit}
-        OFFSET ${Offset}
+        LIMIT ${limit}
+        OFFSET ${offset}
       `;
 
       const formattedData = result.map(row => {
