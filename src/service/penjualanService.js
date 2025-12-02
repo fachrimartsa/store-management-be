@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
 const penjualanService = {
-  getAllPenjualan: async ({ pjl_idUser, limit = 10, offset = 0 }) => {
+  getAllPenjualan: async ({ pjl_idUser, limit, offset}) => {
     try {
       const result = await db`
         SELECT
