@@ -1,7 +1,7 @@
 const penjualanService = require("../../service/penjualanService");
 
 const penjualanResolver = {
-  getAllPenjualan: async ({ pjl_idUser, limit, offset }) => {
+  getAllPenjualan: async (_, { pjl_idUser, limit, offset }) => {
     try {
       return await penjualanService.getAllPenjualan({ pjl_idUser, limit, offset });
     } catch (error) {
